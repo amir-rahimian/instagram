@@ -14,7 +14,7 @@ public class onboardings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboardings);
-        //ui
+        //ui compenent
 
         logo = (ImageView) findViewById(R.id.logo);
         next = (ImageView) findViewById(R.id.next);
