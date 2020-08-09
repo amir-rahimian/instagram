@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         logo = (ImageView) findViewById(R.id.logo) ;
+        logo.setAlpha(0f);
+        logo.animate().alpha(1f).setDuration(2000);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent,activityOptions.toBundle());
                 finish();
             }
-        },5000);
+        },3000);
 
     }
 }
