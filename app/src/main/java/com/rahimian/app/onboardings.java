@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GestureDetectorCompat;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -64,7 +65,7 @@ public class onboardings extends AppCompatActivity     {
         btnIn =(Button) findViewById(R.id.btnIn) ;
         back = findViewById(R.id.back);
 //set before
-        btnIn.setTranslationX(100);
+        btnIn.setTranslationY(1000);
         btnIn.setAlpha(0f);
         title.setAlpha(0f);
         text.setAlpha(0f);
@@ -91,7 +92,7 @@ public class onboardings extends AppCompatActivity     {
                     StartSmartAnimation.startAnimation( title , AnimationType.FadeIn , 1000 , 0 , false  );
                     StartSmartAnimation.startAnimation( text , AnimationType.FadeIn , 1000 , 0 , false  );
                     if(id>0){ pre.animate().translationX(0).alpha(1f); skip.animate().translationX(-1000).alpha(0f); }
-                    if (id==2){ next.animate().translationX(-100).alpha(0f); btnIn.animate().translationX(0).alpha(1f); }
+                    if (id==2){ next.animate().translationX(-100).alpha(0f); btnIn.animate().translationY(0).alpha(1f); }
                     title.setText(titles[id]);
                     text.setText(texts[id]);
                     logo.setImageDrawable(logos[id]);
@@ -108,13 +109,11 @@ public class onboardings extends AppCompatActivity     {
                     StartSmartAnimation.startAnimation( logo , AnimationType.FadeIn , 1000 , 0 , false );
                     StartSmartAnimation.startAnimation( title , AnimationType.FadeIn , 1000 , 0 , false  );
                     StartSmartAnimation.startAnimation( text , AnimationType.FadeIn , 1000 , 0 , false  );
-                    if(id<3){ next.animate().translationX(0).alpha(1f); btnIn.animate().translationX(100).alpha(0f); }
+                    if(id<3){ next.animate().translationX(0).alpha(1f); btnIn.animate().translationY(1000).alpha(0f); }
                     if (id==0){ pre.animate().translationX(100).alpha(0f); skip.animate().translationX(0).alpha(1f); }
                     title.setText(titles[id]);
                     text.setText(texts[id]);
                     logo.setImageDrawable(logos[id]);
-                }else{
-                    Toast.makeText(onboardings.this,"hoom??",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -128,7 +127,7 @@ public class onboardings extends AppCompatActivity     {
                 title.setText(titles[id]);
                 text.setText(texts[id]);
                 logo.setImageDrawable(logos[id]);
-                btnIn.animate().translationX(0).alpha(1f);
+                btnIn.animate().translationY(0).alpha(1f);
                 pre.animate().translationX(0).alpha(1f); skip.animate().translationX(-1000).alpha(0f);
                 next.animate().translationX(-100).alpha(0f);
             }
@@ -139,6 +138,8 @@ public class onboardings extends AppCompatActivity     {
             public void onClick(View v) {
                 Toast.makeText(onboardings.this,"SIGN",Toast.LENGTH_SHORT).show();
 
+                Intent intent = new Intent(onboardings.this, onboardings.class);
+                startActivity(intent);
             }
         });
 
@@ -170,7 +171,6 @@ public class onboardings extends AppCompatActivity     {
 
         //Assign GestureDetectorCompat instance by passing swipeGestureDetector instance
         gestureDetectorCompat = new GestureDetectorCompat(getApplicationContext(), swipeGestureDetector);
-
         //Set onTouchListener on rootLayout
         back.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")

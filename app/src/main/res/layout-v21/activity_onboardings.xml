@@ -56,6 +56,7 @@
         android:gravity="center"
         android:text="text"
         android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/title"
@@ -68,6 +69,13 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent=".4" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
     <ImageView
         android:id="@+id/next"
         android:layout_width="wrap_content"
@@ -76,6 +84,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline6"
         app:srcCompat="@drawable/ic_baseline_navigate_next_24" />
 
     <ImageView
@@ -86,6 +95,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline6"
         app:srcCompat="@drawable/ic_baseline_navigate_before_24" />
 
     <TextView
@@ -96,10 +106,10 @@
         android:text="Skip"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/pre"
+        app:layout_constraintBottom_toBottomOf="@+id/pre"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pre" />
+        app:layout_constraintTop_toTopOf="@+id/pre" />
 
     <Button
         android:id="@+id/btnIn"
@@ -108,9 +118,9 @@
         android:layout_height="wrap_content"
         android:text="SIGNUP | LOGIN"
         android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/next"
+        app:layout_constraintBottom_toBottomOf="@+id/pre"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/skip" />
+        app:layout_constraintTop_toTopOf="@+id/next" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
