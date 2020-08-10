@@ -5,22 +5,20 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GestureDetectorCompat;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.GestureDetector;
+import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.podcopic.animationlib.library.AnimationType;
 import com.podcopic.animationlib.library.StartSmartAnimation;
-
-import java.util.HashMap;
 
 public class onboardings extends AppCompatActivity     {
     private ImageView logo , next , pre ;
@@ -43,9 +41,9 @@ public class onboardings extends AppCompatActivity     {
 
 /* datas */
     /*android*/
-        logos[0]=getResources().getDrawable(R.drawable.ic_baseline_android_24);
-        titles[0]= "Android";
-        texts[0] ="Android is a mobile operating system based on a modified version of the Linux kernel and other open source software, designed primarily for touchscreen mobile devices such as smartphones and tablets. Android is developed by a consortium of developers known as the Open Handset Alliance and commercially sponsored by Google.";
+        logos[0]=getResources().getDrawable(R.drawable.logo);
+        titles[0]= "Smile";
+        texts[0] ="A smile is formed primarily by flexing the muscles at the sides of the mouth. Some smiles include a contraction of the muscles at the corner of the eyes, an action known as a Duchenne smile.";
     /*git*/
         logos[1]=getResources().getDrawable(R.drawable.ic_git);
         titles[1]= "Git";
@@ -136,10 +134,14 @@ public class onboardings extends AppCompatActivity     {
         btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(onboardings.this,"SIGN",Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(onboardings.this, onboardings.class);
-                startActivity(intent);
+                Intent intent = new Intent(onboardings.this, signin_signup.class);
+                Pair<View, String>[] pairs = new Pair[] {
+                        new Pair(logo, "logo"),
+                        new Pair(btnIn, "btn")
+                };
+                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(onboardings.this, pairs);
+                startActivity(intent,activityOptions.toBundle());
+                finish();
             }
         });
 
