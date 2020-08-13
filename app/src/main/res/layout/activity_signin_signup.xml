@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".signin_signup"
+    tools:context=".Signin_signup"
     android:animateLayoutChanges="true"
+    android:onClick="rootClick"
     >
 
 
@@ -46,8 +47,8 @@
         android:text="SIGNUP | LOGIN"
         android:textColor="#000000"
         android:transitionName="btn"
-        app:layout_constraintRight_toLeftOf="@+id/guideline9"
         app:layout_constraintLeft_toLeftOf="@+id/guideline10"
+        app:layout_constraintRight_toLeftOf="@+id/guideline9"
         app:layout_constraintTop_toTopOf="@+id/guideline7" />
 
     <EditText
@@ -113,7 +114,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="inter the sRighted code :"
+        android:text="inter the sent code :"
         android:textColor="#FFFFFF"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/pass"

@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.podcopic.animationlib.library.AnimationType;
 import com.podcopic.animationlib.library.StartSmartAnimation;
@@ -94,8 +93,6 @@ public class onboardings extends AppCompatActivity     {
                     title.setText(titles[id]);
                     text.setText(texts[id]);
                     logo.setImageDrawable(logos[id]);
-                }else{
-                    btnIn.callOnClick();
                 }
             }
         });
@@ -134,7 +131,7 @@ public class onboardings extends AppCompatActivity     {
         btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(onboardings.this, signin_signup.class);
+                Intent intent = new Intent(onboardings.this, Signin_signup.class);
                 Pair<View, String>[] pairs = new Pair[] {
                         new Pair(logo, "logo"),
                         new Pair(btnIn, "btn")

@@ -3,21 +3,21 @@ package com.rahimian.app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.os.CountDownTimer;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import io.github.erehmi.countdown.CountDownTask;
-import io.github.erehmi.countdown.CountDownTimers;
+import java.util.Objects;
 
-public class signin_signup extends AppCompatActivity {
+public class Signin_signup extends AppCompatActivity {
 
     private TextView phone , pass ,vtext ,time;
     private Button btn , edit;
-    private CountDownTask countDownTask = CountDownTask.create();
+    private CountDownTimer timer ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,9 +74,9 @@ public class signin_signup extends AppCompatActivity {
                       passint = Integer.parseInt(passtr);}
                     if (passint==8585){
                         pass.setBackgroundResource(R.drawable.text_area);
-                        countDownTask.cancel();
+                        timer.cancel();
                         time.setVisibility(View.GONE);
-                        Toast.makeText(signin_signup.this,"OK",Toast.LENGTH_LONG).show();
+                        Toast.makeText(Signin_signup.this,"OK",Toast.LENGTH_LONG).show();
                     }else
                     {
                         pass.setBackgroundResource(R.drawable.text_area_error);
@@ -92,7 +92,7 @@ public class signin_signup extends AppCompatActivity {
                 vtext.setVisibility(View.GONE);
                 time.setVisibility(View.GONE);
                 phone.setEnabled(true);
-                countDownTask.cancel();
+                timer.cancel();
                 edit.animate().translationX(50).alpha(0f);
                 pass.setText("");
                 btn.setText("SIGNUP | LOGIN");
@@ -102,26 +102,38 @@ public class signin_signup extends AppCompatActivity {
 
 
     public void starttimer() {
-        long targetMillis = CountDownTask.elapsedRealtime() + 1000 * 30;
-        final int CD_INTERVAL = 1000;
         btn.setText("CONFIRM");
-        time.setVisibility(View.VISIBLE);
-        countDownTask.until(time, targetMillis, CD_INTERVAL, new CountDownTimers.OnCountDownListener() {
-            @Override
-            public void onTick(View view, long millisUntilFinished) {
-                ((TextView)view).setText(String.valueOf(millisUntilFinished / CD_INTERVAL));
+        pass.setEnabled(true);
+         timer = new CountDownTimer(30000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                time.setText((millisUntilFinished/1000)+ "");
             }
-            @Override
-            public void onFinish(View view) {
-                ((TextView)view).setText("Resend");
+
+            public void onFinish() {
+                time.setText("Resend");
                 btn.setText("Resend");
-                ((TextView)view).setOnClickListener(new View.OnClickListener() {
+                pass.setEnabled(false);
+                timer.cancel();
+                time.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         btn.callOnClick();
                     }
-                });
-            }
-        });
+                });            }
+
+        }.start();
     }
+
+    public void  rootClick (View view){
+        try {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            assert imm != null;
+            imm.hideSoftInputFromWindow((getCurrentFocus()).getWindowToken(),0);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
