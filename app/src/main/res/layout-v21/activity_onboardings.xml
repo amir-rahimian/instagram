@@ -27,13 +27,17 @@
     <ImageView
         android:id="@+id/logo"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:contentDescription="@string/todo"
         android:transitionName="logo"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintRight_toLeftOf="@+id/guideline4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+        app:layout_constraintRight_toLeftOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
 
@@ -58,9 +62,12 @@
         android:gravity="center"
         android:text="text"
         android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintRight_toLeftOf="@+id/guideline4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintLeft_toLeftOf="@+id/guideline3"
+        app:layout_constraintRight_toLeftOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:lineHeight="20dp" />
 
@@ -114,16 +121,18 @@
         app:layout_constraintTop_toTopOf="@+id/pre" />
 
     <Button
-        android:transitionName="btn"
         android:id="@+id/btnIn"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_area"
         android:text="SIGNUP | LOGIN"
-        android:textColor="#000000"
+        android:textColor="@color/colorAccent"
+        android:transitionName="btn"
         app:layout_constraintBottom_toBottomOf="@+id/pre"
-        app:layout_constraintRight_toLeftOf="@+id/guideline4"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/next" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/next"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

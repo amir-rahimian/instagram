@@ -28,11 +28,11 @@
         app:layout_constraintStart_toStartOf="@+id/textView" />
 
     <ImageView
-        android:transitionName="logo"
         android:id="@+id/logo"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:contentDescription="@string/todo"
+        android:transitionName="logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"

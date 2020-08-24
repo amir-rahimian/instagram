@@ -12,12 +12,17 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.parse.ParseInstallation;
+
 public class MainActivity extends AppCompatActivity {
     private ImageView logo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // parse server
+        ParseInstallation.getCurrentInstallation().saveInBackground();
+        // UI
         logo = (ImageView) findViewById(R.id.logo) ;
         logo.setAlpha(0f);
         logo.animate().alpha(1f).setDuration(2000);

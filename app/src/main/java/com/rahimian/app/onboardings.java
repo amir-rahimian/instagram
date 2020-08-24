@@ -3,19 +3,21 @@ package com.rahimian.app;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GestureDetectorCompat;
-
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.irozon.sneaker.Sneaker;
+import com.parse.ParseUser;
 import com.podcopic.animationlib.library.AnimationType;
 import com.podcopic.animationlib.library.StartSmartAnimation;
 
@@ -23,44 +25,47 @@ public class onboardings extends AppCompatActivity     {
     private ImageView logo , next , pre ;
     private TextView title , text ,skip;
     private Button btnIn;
-    private ConstraintLayout back;
     private int id = 0 , count=3;
     private String[] titles = new String[count];
     private String[] texts = new String[count];
     private Drawable[] logos = new Drawable[count];
 
-    private SwipeGestureDetector swipeGestureDetector;
     private GestureDetectorCompat gestureDetectorCompat;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboardings);
-
+        if (ParseUser.getCurrentUser()!=null){
+            Intent intent = new Intent(this,Home.class);
+            startActivity(intent);
+            finish();
+        }
 
 /* datas */
     /*android*/
         logos[0]=getResources().getDrawable(R.drawable.logo);
-        titles[0]= "Smile";
-        texts[0] ="A smile is formed primarily by flexing the muscles at the sides of the mouth. Some smiles include a contraction of the muscles at the corner of the eyes, an action known as a Duchenne smile.";
+        titles[0]= "Instagram";
+        texts[0] ="Instagram (commonly abbreviated to IG or Insta)[10] is an American photo and video sharing social networking service owned by Facebook, created by Kevin Systrom and Mike Krieger and originally launched on iOS in October 2010.";
     /*git*/
-        logos[1]=getResources().getDrawable(R.drawable.ic_git);
-        titles[1]= "Git";
-        texts[1]="Git is a distributed version-control system for tracking changes in source code during software development.[8] It is designed for coordinating work among programmers, but it can be used to track changes in any set of files. Its goals include speed, data integrity, and support for distributed, non-linear workflow";
+        logos[1]=getResources().getDrawable(R.drawable.ic_post);
+        titles[1]= "Post";
+        texts[1]="You can Post inorder to share your time with your friends :)  ";
     /*php*/
-        logos[2]=getResources().getDrawable(R.drawable.ic_php);
-        titles[2]= "PHP";
-        texts[2]="PHP is a general-purpose scripting language that is especially suited to web development.[6] It was originally created by Danish-Canadian programmer Rasmus Lerdorf in 1994;[7] the PHP reference implementation is now produced by The PHP Group.[8] PHP originally stood for Personal Home Page,[7] but it now stands for the recursive initialise PHP: Hypertext Preprocessor.[9]";
+        logos[2]=getResources().getDrawable(R.drawable.ic_pro);
+        titles[2]= "Profile";
+        texts[2]="its time to create an account and complete it to start ";
 
 //ui compenent
-        logo = (ImageView) findViewById(R.id.logo);
-        next = (ImageView) findViewById(R.id.next);
-        pre = (ImageView) findViewById(R.id.pre);
-        title = (TextView) findViewById(R.id.title);
-        text = (TextView) findViewById(R.id.text);
-        skip = (TextView) findViewById(R.id.skip);
-        btnIn =(Button) findViewById(R.id.btnIn) ;
-        back = findViewById(R.id.back);
+        logo =  findViewById(R.id.logo);
+        next =  findViewById(R.id.next);
+        pre =  findViewById(R.id.pre);
+        title =  findViewById(R.id.title);
+        text =  findViewById(R.id.text);
+        skip =  findViewById(R.id.skip);
+        btnIn = findViewById(R.id.btnIn) ;
+        ConstraintLayout back = findViewById(R.id.back);
 //set before
         btnIn.setTranslationY(1000);
         btnIn.setAlpha(0f);
@@ -132,7 +137,7 @@ public class onboardings extends AppCompatActivity     {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(onboardings.this, Signin_signup.class);
-                Pair<View, String>[] pairs = new Pair[] {
+                Pair[] pairs = new Pair[] {
                         new Pair(logo, "logo"),
                         new Pair(btnIn, "btn")
                 };
@@ -142,8 +147,7 @@ public class onboardings extends AppCompatActivity     {
             }
         });
 
-
-        swipeGestureDetector=new SwipeGestureDetector(new SwipeActions() {
+        SwipeGestureDetector swipeGestureDetector = new SwipeGestureDetector(new SwipeActions() {
             @Override
             public void onSwipeLeft() {
                 //Write The actions need to be performed when Swiped Left here

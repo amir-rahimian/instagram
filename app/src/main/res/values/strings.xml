@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">App</string>
+    <string name="app_name">Instagram</string>
     <string name="loading">Loading</string>
     <string name="todo">TODO</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="resend">Resend</string>
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+    <string name="back4app_app_id">lH06Reb3lr4o2WS9Ak6PC2Zgm5uWcGlze5CTiKW7</string>
+    <string name="back4app_client_key">JrYQ5jv3qOoqHcRXzhhzaBos2uqb6W8aBl7qC0Cp</string>
 </resources>
