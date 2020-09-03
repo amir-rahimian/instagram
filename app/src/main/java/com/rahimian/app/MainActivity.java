@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.parse.ParseInstallation;
+import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView logo;
@@ -35,7 +36,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent,activityOptions.toBundle());
                 finish();
             }
-        },3000);
+        },1000);
 
+    }
+
+    @Override
+    protected void onResume() {
+        if (ParseUser.getCurrentUser()!=null && isDestroyed()) {
+            Intent intent = new Intent(this, Home.class);
+            startActivity(intent);
+            finish();
+        }
+        super.onResume();
     }
 }

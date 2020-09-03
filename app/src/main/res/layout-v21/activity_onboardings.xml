@@ -5,7 +5,6 @@
     android:id="@+id/back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     tools:context=".onboardings"
     android:animateLayoutChanges="true"
     >
@@ -32,7 +31,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:contentDescription="@string/todo"
+        android:contentDescription="@string/TODO"
         android:transitionName="logo"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="0.0"
@@ -64,10 +63,8 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline3"
         app:layout_constraintRight_toLeftOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:lineHeight="20dp" />
 
@@ -130,8 +127,8 @@
         android:textColor="@color/colorAccent"
         android:transitionName="btn"
         app:layout_constraintBottom_toBottomOf="@+id/pre"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintRight_toLeftOf="@+id/guideline4"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/next"
         app:layout_constraintVertical_bias="0.0" />
 

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -19,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -40,13 +40,14 @@ import java.util.List;
 public class Signin_signup extends AppCompatActivity {
 
     private EditText phone, pass, name;
+    private ImageView logo ;
     private TextView time;
     private Switch changepasstype;
     private ConstraintLayout getname;
     private Button btn, edit;
     private CountDownTimer timer;
     private int code;
-    private String STATICPASS = "uzsLYe+kFgY5Eq#?jfPf4XM4M9$f%u8$ayCTPg44@%au!k@&QD4jzFQ%Cz_q2+WB5XB-DvkTJF+pS6e*Z3xeC27D#_N2xbAj?ajjw=_cAZ9TGN%hT!e9F6+r&xtc+U=ceAdLDVqG^RaWxppCEJbJaCuSmcvrsT-gqet?GbxdFv2pwH%nxyRHfN-b^Lnps&ALX+vmjSzzPXaYs5mtE3spZ%Vr@2D4JhHE3HCqyw&rzxEK+aXwtG-^3*-mJwVpRWY+5E8q7HybE^-FxjwevpuQ6rTM&E#BxVZ5HVbCta%$CNuLFWzQd%wd9DKbFr+Hrc*!WG45F?d55Lex3d4?@ns^#Umhs*hG3Kp*GuD*UKj=*wqCxky=GT?pk=q*k+wV^dQd&$9TLHyFmm4P-^X3KUA%_ZUw3WaBTw9_?9Dhnc5csjPg4ZDDb8##6RkzD$E4*TgQbLcFw8hxn5y%cHSgU=m?DH_xEngV2nkGK6-8UAN8XTQ3N?we9S7^KLLYGQn%NFE!UVtazg%ru2ELPcgPR9*crEX*4wgZ+s7!3WcDsc*Gj_RWwZ#HbST6KA-q*8E5zs4ZeXRs5^wM$4Y_J+5xBSBVSn?J%2a?%zReCy=Mdc6PefFp%meL=fRCDk^cQUkPX8kwbkmz?2Xf-!YQB-HBKEaxhWQZN6SXtEm8=^D5dKMCA$=6NWyk-9J7a&PVCCahnY&E!Vj-VyvJzcNQdv3MKTG-?w7qqJprkH%ASy5sByY7%-45g?fs$cMU9==fknS3ReZL?ch&Hm3LH#bJE2ktV8NNEq^Wpe?8KXFwrD-$vRSuS&8hMawj4AK=@pftrL2%tfygx%J#7kfa9!WVWF?6qgFPWC5%n6-*AJ+UnsxS?Z3s!K+bNG*tvMj^VXJ5RGAtR&ULX$p=HMHuA*QC?@X8&4TV&KT7sn#6C4cMawDjpw3S3hEzPkFF#zsharkC&$XwUeRErP9nUtMQB584Nhm_^M2r$$nJ+M8@&P2cn_+Q&!@n7A6A_M+ZUefTZSvV#x8RC3Fp";
+    private String STATICPASS = "PVf@dhCD@1D4@F2E@oX9";
     private boolean ISPASSCHANGE =false ;
 
     enum State {Signup, Login}
@@ -64,6 +65,7 @@ public class Signin_signup extends AppCompatActivity {
             finish();
         }
 //------UI
+
         View.OnKeyListener onKeyListener = new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -76,8 +78,9 @@ public class Signin_signup extends AppCompatActivity {
         getname = findViewById(R.id.getname);
         changepasstype = findViewById(R.id.changepasstype);
         Guideline guideline = findViewById(R.id.guideline);
-        name = findViewById(R.id.name);
+        name = findViewById(R.id.profileName);
         phone = findViewById(R.id.phone);
+        logo = findViewById(R.id.imageView);
         pass = findViewById(R.id.pass);
         pass.addTextChangedListener(new TextWatcher() {
             @Override
@@ -136,6 +139,7 @@ public class Signin_signup extends AppCompatActivity {
                 if (pass.getVisibility() == View.GONE) {
                     if ((phone.length() == 11)) {
                         generaitcode();
+                        checkphone();
                         starttimer();
                         phone.setBackgroundResource(R.drawable.text_area);
                         pass.setVisibility(View.VISIBLE);
@@ -157,7 +161,7 @@ public class Signin_signup extends AppCompatActivity {
                 } else if (!btn.getText().equals("Log In")) { // VERIFY
                     final String passtr = pass.getText().toString();
 
-                    if (changepasstype.isChecked()) {
+                    if (changepasstype.isChecked()&&state==State.Login) {
                         login(phone.getText().toString().trim(),passtr);
                     } else {
                         int passint = 0;
@@ -167,14 +171,24 @@ public class Signin_signup extends AppCompatActivity {
                         if (passint == code) {
                             timer.cancel();
                             time.setVisibility(View.GONE);
-                            edit.setVisibility(View.GONE);
                             ///////////////// CHECK SING UP OR IN //////////////////////
                             if (state == State.Signup) {
                                 getname.setVisibility(View.VISIBLE);
                                 btn.setText("Log In");
                             } else {
                                 // LOG IN  ///////////////////////////////
-                                login(phone.getText().toString().trim(),STATICPASS);
+                                if (ISPASSCHANGE) {
+                                    pass.setText("");
+                                    Sneaker.with(Signin_signup.this)
+                                            .setTitle("Now Enter The Static Password", R.color.colorPrimary)
+                                            .setCornerRadius(30)
+                                            .sneakWarning();
+                                    pass.requestFocus();
+                                    changepasstype.setChecked(true);
+                                }else
+                                {
+                                    login(phone.getText().toString().trim(), STATICPASS);
+                                }
                             }
                             //////////////////////////////////////////////////////
                         }else {
@@ -188,7 +202,8 @@ public class Signin_signup extends AppCompatActivity {
                     }
                 } else {//GET NAME
                     if (name.getText().length() > 6) {
-                        if ((name != null) && name.getText().toString().matches("[A-Za-z0-9_]+")) {
+                        if ((!name.getText().toString().matches("")) && name.getText().toString().matches("^[\\p{L} .'-]+$"))
+                        {
                             //SING UP  //////////////////////////
                             ParseUser parseUser = new ParseUser();
                             parseUser.setUsername(phone.getText().toString().trim());
@@ -251,12 +266,15 @@ public class Signin_signup extends AppCompatActivity {
     private void generaitcode() {
         code = (int) ((Math.random() * (9999 - 3000)) + 3000);
         Sneaker.with(Signin_signup.this)
-                .setTitle("SMS", R.color.colorPrimary)
+                .setTitle("SMS ->"+code, R.color.colorPrimary)
                 .setMessage("Verify code :  " + code, R.color.colorPrimaryDark)
                 .setIcon(R.drawable.ic_baseline_sms_24)
                 .setCornerRadius(30)
                 .setDuration(8000)
                 .sneak(R.color.colorAccent);
+
+    }
+    private void checkphone() {
         /*chane state */
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", phone.getText().toString().trim());
@@ -280,7 +298,9 @@ public class Signin_signup extends AppCompatActivity {
                 }
             }
         });
+
     }
+
 
     public void starttimer() {
         btn.setText(R.string.confirm);
@@ -356,4 +376,10 @@ public class Signin_signup extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        logo.setVisibility(View.INVISIBLE);
+        btn.setVisibility(View.INVISIBLE);
+        super.onBackPressed();
+    }
 }

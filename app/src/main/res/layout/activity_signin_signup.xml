@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     tools:context=".Signin_signup"
     android:animateLayoutChanges="true"
     android:onClick="rootClick"
@@ -143,8 +142,9 @@
         android:layout_height="wrap_content"
         android:text="I  have password"
         android:textColor="@color/colorAccent"
+        android:theme="@style/switchstyle"
         android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintRight_toLeftOf="@+id/guideline9"
         app:layout_constraintTop_toBottomOf="@+id/pass" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -161,7 +161,7 @@
 
 
         <EditText
-            android:id="@+id/name"
+            android:id="@+id/profileName"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:background="@drawable/text_area"
@@ -185,8 +185,8 @@
             android:layout_marginBottom="8dp"
             android:text="inter  your name : "
             android:textColor="@color/colorAccent"
-            app:layout_constraintBottom_toTopOf="@+id/name"
-            app:layout_constraintLeft_toLeftOf="@+id/name" />
+            app:layout_constraintBottom_toTopOf="@+id/profileName"
+            app:layout_constraintLeft_toLeftOf="@+id/profileName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

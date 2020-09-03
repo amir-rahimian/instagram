@@ -1,10 +1,18 @@
 <resources>
     <string name="app_name">Instagram</string>
     <string name="loading">Loading</string>
-    <string name="todo">TODO</string>
+    <string name="TODO">TODO</string>
     <string name="confirm">CONFIRM</string>
     <string name="resend">Resend</string>
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
     <string name="back4app_app_id">lH06Reb3lr4o2WS9Ak6PC2Zgm5uWcGlze5CTiKW7</string>
     <string name="back4app_client_key">JrYQ5jv3qOoqHcRXzhhzaBos2uqb6W8aBl7qC0Cp</string>
+    <string name="title_activity_home">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="passhint"><b>For Better Password</b> \n * Has <u>8</u> Characters, Minimum \n * Includes Numbers, Symbols, Capital Letters, and Lower-Case Letters\n * Isn’t a Dictionary Word or Combination of Dictionary Words\n * Doesn’t Rely on Obvious Substitutions</string>
+
 </resources>

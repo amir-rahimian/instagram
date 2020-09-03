@@ -9,14 +9,12 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Pair;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.irozon.sneaker.Sneaker;
 import com.parse.ParseUser;
 import com.podcopic.animationlib.library.AnimationType;
 import com.podcopic.animationlib.library.StartSmartAnimation;
@@ -49,11 +47,11 @@ public class onboardings extends AppCompatActivity     {
         titles[0]= "Instagram";
         texts[0] ="Instagram (commonly abbreviated to IG or Insta)[10] is an American photo and video sharing social networking service owned by Facebook, created by Kevin Systrom and Mike Krieger and originally launched on iOS in October 2010.";
     /*git*/
-        logos[1]=getResources().getDrawable(R.drawable.ic_post);
+        logos[1]=getResources().getDrawable(R.drawable.ob_post);
         titles[1]= "Post";
         texts[1]="You can Post inorder to share your time with your friends :)  ";
     /*php*/
-        logos[2]=getResources().getDrawable(R.drawable.ic_pro);
+        logos[2]=getResources().getDrawable(R.drawable.ob_pro);
         titles[2]= "Profile";
         texts[2]="its time to create an account and complete it to start ";
 
@@ -189,5 +187,10 @@ public class onboardings extends AppCompatActivity     {
 
     }
 
-
+    @Override
+    public void onBackPressed() {
+        logo.setVisibility(View.INVISIBLE);
+        btnIn.setVisibility(View.INVISIBLE);
+        super.onBackPressed();
+    }
 }
