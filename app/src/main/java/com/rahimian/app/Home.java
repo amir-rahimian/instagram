@@ -8,8 +8,6 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
@@ -23,7 +21,7 @@ public class Home extends AppCompatActivity {
     private MaterialToolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private Adapter addapter;
+    private FregmentAdapter addapter;
     private boolean closeable;
 
 
@@ -39,7 +37,7 @@ public class Home extends AppCompatActivity {
         tabLayout = findViewById(R.id.home_tablayout);
         viewPager = findViewById(R.id.home_viewpager);
 
-        addapter = new Adapter(getSupportFragmentManager(), 0);
+        addapter = new FregmentAdapter(getSupportFragmentManager(), 0);
         viewPager.setAdapter(addapter);
         tabLayout.setupWithViewPager(viewPager, true);
 

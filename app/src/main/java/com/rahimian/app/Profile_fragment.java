@@ -17,12 +17,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.irozon.sneaker.Sneaker;
-import com.irozon.sneaker.interfaces.OnSneakerClickListener;
-import com.parse.LogOutCallback;
-import com.parse.ParseException;
 import com.parse.ParseUser;
-
-import org.jetbrains.annotations.NotNull;
 
 
 public class Profile_fragment extends Fragment {

@@ -1,5 +1,6 @@
 package com.rahimian.app;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,15 +23,15 @@ import com.parse.SaveCallback;
 
 public class PassChangeActivity extends AppCompatActivity {
 
-    String specialCharRegex,UpperCaseRegex,NumberRegex;
+    String specialCharRegex, UpperCaseRegex, NumberRegex;
     boolean[] goodpass = new boolean[4];
-    private ImageView btn_back ;
+    private ImageView btn_back;
     private ParseUser User;
     private String STATICPASS = "PVf@dhCD@1D4@F2E@oX9";
-    private boolean OKPASS =false ;
-    private SwitchMaterial staticPassSwitch ;
-    private ProgressBar progress ;
-    private TextView passhint;
+    private boolean OKPASS = false;
+    private SwitchMaterial staticPassSwitch;
+    private ProgressBar progress;
+    private TextView passhint, errortxt;
     private EditText password;
 
     @Override
@@ -38,13 +39,14 @@ public class PassChangeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pass_change);
 
-        specialCharRegex=".*[@#$%^&+=].*";
-        UpperCaseRegex=".*[A-Z].*";
-        NumberRegex=".*[0-9].*";
+        specialCharRegex = ".*[@#$%^&+=].*";
+        UpperCaseRegex = ".*[A-Z].*";
+        NumberRegex = ".*[0-9].*";
 
         User = ParseUser.getCurrentUser();
 
         passhint = findViewById(R.id.passhint);
+        errortxt = findViewById(R.id.errortxt);
         progress = findViewById(R.id.prograssvalidpass);
         progress.setVisibility(View.GONE);
 
@@ -53,9 +55,11 @@ public class PassChangeActivity extends AppCompatActivity {
         password.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
+                String pas = "";
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                     staticPassSwitch.setChecked(true);
                 }
+
                 return false;
             }
         });
@@ -71,44 +75,78 @@ public class PassChangeActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                int c=0;
-                validate();
-                for (boolean bol :
-                        goodpass) {
-                    if (bol){c++;}
+                String textEntered = password.getText().toString();
+                if (!textEntered.isEmpty() && textEntered.contains(" ")) {
+                    password.setText(textEntered.replace(" ", ""));
+                    password.setSelection(password.getText().length());
                 }
-                switch (c) {
+                if (textEntered.matches("(.*[\u0600-\u06FF].*)|(.*[*/()].*)")) {
+                    password.setText(textEntered.substring(0,textEntered.length()-1));
+                    password.setSelection(password.getText().length());
+                }
+                int prog = 0;
+                errortxt.setText("");
+                String str = "";
+                validate();
+                for (int i = 0; i < goodpass.length; i++) {
+                    if (goodpass[i]) {
+                        prog++;
+
+                    } else {
+                        str = str + i;
+                    }
+                }
+                if (str.contains("0")) {
+                    errortxt.setText(errortxt.getText() + "\nnot enough length \n");
+                }
+                if (str.contains("1")) {
+                    errortxt.setText(errortxt.getText() + "\nstronger with a SpecialChar " + specialCharRegex + "\n");
+                }
+                if (str.contains("2")) {
+                    errortxt.setText(errortxt.getText() + "\nstronger with a UpperCaseLetter " + UpperCaseRegex + "\n");
+                }
+                if (str.contains("3")) {
+                    errortxt.setText(errortxt.getText() + "\nadd numbers to have more strong password \n");
+                }
+                switch (prog) {
                     case 4:
                         OKPASS = true;
                         progress.getProgressDrawable().setColorFilter(
                                 getResources().getColor(R.color.ok), android.graphics.PorterDuff.Mode.SRC_IN);
-                        progress.setProgress(100);
+                        errortxt.setTextColor(getResources().getColor(R.color.ok));
+                        errortxt.setText(getResources().getString(R.string.its_good));
                         break;
+
                     case 3:
+                        if (password.getText().toString().length()>=6){
                         OKPASS = true;
                         progress.getProgressDrawable().setColorFilter(
                                 getResources().getColor(R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN);
-                        progress.setProgress(80);
+                        errortxt.setTextColor(getResources().getColor(R.color.colorAccent));
+                        errortxt.setText(errortxt.getText().toString() + getResources().getString(R.string.its_ok));
+                        }else {
+                            OKPASS = false;
+                            progress.getProgressDrawable().setColorFilter(
+                                    getResources().getColor(R.color.warning), android.graphics.PorterDuff.Mode.SRC_IN);
+                            errortxt.setTextColor(getResources().getColor(R.color.warning));
+                            errortxt.setText(errortxt.getText().toString() + getResources().getString(R.string.to_short));
+                        }
                         break;
                     case 2:
                         OKPASS = false;
                         progress.getProgressDrawable().setColorFilter(
                                 getResources().getColor(R.color.warning), android.graphics.PorterDuff.Mode.SRC_IN);
-                        progress.setProgress(40);
-                        break;
-                    case 1:
-                        OKPASS = false;
-                        progress.getProgressDrawable().setColorFilter(
-                                getResources().getColor(R.color.error), android.graphics.PorterDuff.Mode.SRC_IN);
-                        progress.setProgress(20);
+                        errortxt.setTextColor(getResources().getColor(R.color.warning));
                         break;
                     default:
                         OKPASS = false;
                         progress.getProgressDrawable().setColorFilter(
                                 getResources().getColor(R.color.error), android.graphics.PorterDuff.Mode.SRC_IN);
-                        progress.setProgress(3);
+                        errortxt.setTextColor(getResources().getColor(R.color.error));
                         break;
                 }
+                progress.setProgress(prog);
+
             }
         });
         password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -117,24 +155,28 @@ public class PassChangeActivity extends AppCompatActivity {
                 password.setHint("write...");
                 staticPassSwitch.setChecked(false);
                 progress.setVisibility(View.VISIBLE);
-                progress.setProgress(3);
+                progress.setProgress(0);
                 progress.getProgressDrawable().setColorFilter(
                         getResources().getColor(R.color.error), android.graphics.PorterDuff.Mode.SRC_IN);
             }
         });
 
         staticPassSwitch = findViewById(R.id.staticPassSwitch);
-        if (User.getBoolean("ispasschange")){
+        if (User.getBoolean("ispasschange")) {
             staticPassSwitch.setChecked(true);
             password.setHint("Tap To change...");
-        }else {
+        } else {
             staticPassSwitch.setChecked(false);
         }
-        if (staticPassSwitch.isChecked()){staticPassSwitch.setText("ON");}else {staticPassSwitch.setText("OFF");}
+        if (staticPassSwitch.isChecked()) {
+            staticPassSwitch.setText("ON");
+        } else {
+            staticPassSwitch.setText("OFF");
+        }
         staticPassSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     if (OKPASS) {
                         staticPassSwitch.setText("ON");
                         User.setPassword(password.getText().toString());
@@ -142,16 +184,16 @@ public class PassChangeActivity extends AppCompatActivity {
                         User.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
-                                if (e==null) {
+                                if (e == null) {
                                     Sneaker.with(PassChangeActivity.this)
                                             .setTitle("Success", R.color.colorAccent)
-                                            .setMessage("you set "+password.getText().toString()+" as your static password", R.color.colorAccent)
+                                            .setMessage("you set " + password.getText().toString() + " as your static password", R.color.colorAccent)
                                             .setCornerRadius(30)
                                             .sneakSuccess();
                                 }
                             }
                         });
-                    }else {
+                    } else {
                         staticPassSwitch.setChecked(false);
                         Sneaker.with(PassChangeActivity.this)
                                 .setTitle("Error", R.color.colorAccent)
@@ -160,10 +202,10 @@ public class PassChangeActivity extends AppCompatActivity {
                                 .sneakError();
                     }
 
-                }else {
+                } else {
                     staticPassSwitch.setText("OFF");
                     User.setPassword(STATICPASS);
-                    User.put("ispasschange",false);
+                    User.put("ispasschange", false);
                     User.saveInBackground();
                 }
             }
@@ -195,29 +237,35 @@ public class PassChangeActivity extends AppCompatActivity {
         }
 
     }
-    public void validate(){
 
-        String passwordstr =password.getText().toString().trim();
+    public void validate() {
 
-        if(passwordstr.length()>8){
-            goodpass[0] =true ; }
-        else {
-            goodpass[0] = false ; }
+        String passwordstr = password.getText().toString().trim();
 
-        if(passwordstr.matches(specialCharRegex)){
-            goodpass[1] =true; }
-        else{
-            goodpass[1] =false; }
+            if (passwordstr.length() > 8) {
+                goodpass[0] = true;
+            } else {
+                goodpass[0] = false;
+            }
 
-        if(passwordstr.matches(UpperCaseRegex)){
-            goodpass[2] = true; }
-        else {
-            goodpass[2] = false; }
+            if (passwordstr.matches(specialCharRegex)) {
+                goodpass[1] = true;
+            } else {
+                goodpass[1] = false;
+            }
 
-        if(passwordstr.matches(NumberRegex)){
-            goodpass[3] = true; }
-        else {
-            goodpass[3] = false; }
+            if (passwordstr.matches(UpperCaseRegex)) {
+                goodpass[2] = true;
+            } else {
+                goodpass[2] = false;
+            }
+
+            if (passwordstr.matches(NumberRegex)) {
+                goodpass[3] = true;
+            } else {
+                goodpass[3] = false;
+            }
+
     }
 
 }

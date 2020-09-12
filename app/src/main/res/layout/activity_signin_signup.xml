@@ -161,7 +161,7 @@
 
 
         <EditText
-            android:id="@+id/profileName"
+            android:id="@+id/RVprofileName"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:background="@drawable/text_area"
@@ -185,8 +185,8 @@
             android:layout_marginBottom="8dp"
             android:text="inter  your name : "
             android:textColor="@color/colorAccent"
-            app:layout_constraintBottom_toTopOf="@+id/profileName"
-            app:layout_constraintLeft_toLeftOf="@+id/profileName" />
+            app:layout_constraintBottom_toTopOf="@+id/RVprofileName"
+            app:layout_constraintLeft_toLeftOf="@+id/RVprofileName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

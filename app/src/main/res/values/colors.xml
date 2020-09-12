@@ -3,8 +3,8 @@
     <color name="colorPrimary">#303030</color>
     <color name="colorPrimaryDark">#292929</color>
     <color name="colorAccent">#fff</color>
-    <color name="error">#FF0000</color>
-    <color name="warning">#FFEB3B</color>
-    <color name="ok">#4CAF50</color>
-    <color name="blue">#2196F3</color>
+    <color name="error">#D50000</color>
+    <color name="warning">#FFD600</color>
+    <color name="ok">#00C853</color>
+    <color name="blue">#0091EA</color>
 </resources>

@@ -11,8 +11,10 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="its_ok"><b>\n But Its OK !</b></string>
+    <string name="its_good"><b>\n Its GOOD !</b></string>
+    <string name="to_short"><b>\n Its Too Short !</b></string>
     <string name="passhint"><b>For Better Password</b> \n * Has <u>8</u> Characters, Minimum \n * Includes Numbers, Symbols, Capital Letters, and Lower-Case Letters\n * Isn’t a Dictionary Word or Combination of Dictionary Words\n * Doesn’t Rely on Obvious Substitutions</string>
 
 </resources>

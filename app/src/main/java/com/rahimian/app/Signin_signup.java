@@ -40,7 +40,7 @@ import java.util.List;
 public class Signin_signup extends AppCompatActivity {
 
     private EditText phone, pass, name;
-    private ImageView logo ;
+    private ImageView logo;
     private TextView time;
     private Switch changepasstype;
     private ConstraintLayout getname;
@@ -48,7 +48,7 @@ public class Signin_signup extends AppCompatActivity {
     private CountDownTimer timer;
     private int code;
     private String STATICPASS = "PVf@dhCD@1D4@F2E@oX9";
-    private boolean ISPASSCHANGE =false ;
+    private boolean ISPASSCHANGE = false;
 
     enum State {Signup, Login}
 
@@ -78,7 +78,7 @@ public class Signin_signup extends AppCompatActivity {
         getname = findViewById(R.id.getname);
         changepasstype = findViewById(R.id.changepasstype);
         Guideline guideline = findViewById(R.id.guideline);
-        name = findViewById(R.id.profileName);
+        name = findViewById(R.id.RVprofileName);
         phone = findViewById(R.id.phone);
         logo = findViewById(R.id.imageView);
         pass = findViewById(R.id.pass);
@@ -108,13 +108,13 @@ public class Signin_signup extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if (isChecked ) {// have pass
-                    if (ISPASSCHANGE){
+                if (isChecked) {// have pass
+                    if (ISPASSCHANGE) {
                         timer.cancel();
                         time.setVisibility(View.GONE);
                         pass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                         pass.setHint("Your Password");
-                    }else {
+                    } else {
                         changepasstype.setChecked(false);
                         Sneaker.with(Signin_signup.this)
                                 .setTitle("NO PassWord founded", R.color.colorPrimary)
@@ -161,8 +161,8 @@ public class Signin_signup extends AppCompatActivity {
                 } else if (!btn.getText().equals("Log In")) { // VERIFY
                     final String passtr = pass.getText().toString();
 
-                    if (changepasstype.isChecked()&&state==State.Login) {
-                        login(phone.getText().toString().trim(),passtr);
+                    if (changepasstype.isChecked() && state == State.Login) {
+                        login(phone.getText().toString().trim(), passtr);
                     } else {
                         int passint = 0;
                         if (!passtr.equals("")) {
@@ -183,15 +183,14 @@ public class Signin_signup extends AppCompatActivity {
                                             .setTitle("Now Enter The Static Password", R.color.colorPrimary)
                                             .setCornerRadius(30)
                                             .sneakWarning();
-                                    pass.requestFocus();
                                     changepasstype.setChecked(true);
-                                }else
-                                {
+                                    pass.requestFocus();
+                                } else {
                                     login(phone.getText().toString().trim(), STATICPASS);
                                 }
                             }
                             //////////////////////////////////////////////////////
-                        }else {
+                        } else {
                             pass.setBackgroundResource(R.drawable.text_area_error);
                             Sneaker.with(Signin_signup.this)
                                     .setTitle("NOT Correct", R.color.colorPrimary)
@@ -201,45 +200,38 @@ public class Signin_signup extends AppCompatActivity {
                         }
                     }
                 } else {//GET NAME
-                    if (name.getText().length() > 6) {
-                        if ((!name.getText().toString().matches("")) && name.getText().toString().matches("^[\\p{L} .'-]+$"))
-                        {
-                            //SING UP  //////////////////////////
-                            ParseUser parseUser = new ParseUser();
-                            parseUser.setUsername(phone.getText().toString().trim());
-                            parseUser.put("name", name.getText().toString().trim());
-                            parseUser.setPassword(STATICPASS);
-                            parseUser.put("genericpass", code);
-                            //
-                            Sneaker sneaker = Sneaker.with(Signin_signup.this);sneaker.autoHide(false);
-                            View view = LayoutInflater.from(Signin_signup.this).inflate(R.layout.waiting_dialog,  sneaker.getView(), false);
-                            sneaker.sneakCustom(view);
-                            //
-                            parseUser.signUpInBackground(new SignUpCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    if (e == null) {
-                                        Intent intent = new Intent(Signin_signup.this, Home.class);
-                                        startActivity(intent);
-                                    } else {
-                                        Sneaker.with(Signin_signup.this)
-                                                .setTitle(e.getMessage() + "  :  " + e.getCode(), R.color.colorPrimary)
-                                                .setCornerRadius(30)
-                                                .sneakError();
-                                    }
-                                }
-                            });
 
-                        } else {
-                            Sneaker.with(Signin_signup.this)
-                                    .setTitle("NOT Valid", R.color.colorPrimary)
-                                    .setCornerRadius(30)
-                                    .sneakError();
-                        }
+                    if ((!name.getText().toString().matches("")) && name.getText().toString().matches("^[\\p{L} .'-]+$")) {
+                        //SING UP  //////////////////////////
+                        ParseUser parseUser = new ParseUser();
+                        parseUser.setUsername(phone.getText().toString().trim());
+                        parseUser.put("name", name.getText().toString().trim());
+                        parseUser.setPassword(STATICPASS);
+                        parseUser.put("genericpass", code);
+                        //
+                        Sneaker sneaker = Sneaker.with(Signin_signup.this);
+                        sneaker.autoHide(false);
+                        View view = LayoutInflater.from(Signin_signup.this).inflate(R.layout.waiting_dialog, sneaker.getView(), false);
+                        sneaker.sneakCustom(view);
+                        //
+                        parseUser.signUpInBackground(new SignUpCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    Intent intent = new Intent(Signin_signup.this, Home.class);
+                                    startActivity(intent);
+                                } else {
+                                    Sneaker.with(Signin_signup.this)
+                                            .setTitle(e.getMessage() + "  :  " + e.getCode(), R.color.colorPrimary)
+                                            .setCornerRadius(30)
+                                            .sneakError();
+                                }
+                            }
+                        });
+
                     } else {
                         Sneaker.with(Signin_signup.this)
                                 .setTitle("NOT Valid", R.color.colorPrimary)
-                                .setMessage("need to be at last 6 character . try again !", R.color.colorPrimaryDark)
                                 .setCornerRadius(30)
                                 .sneakError();
                     }
@@ -266,7 +258,7 @@ public class Signin_signup extends AppCompatActivity {
     private void generaitcode() {
         code = (int) ((Math.random() * (9999 - 3000)) + 3000);
         Sneaker.with(Signin_signup.this)
-                .setTitle("SMS ->"+code, R.color.colorPrimary)
+                .setTitle("SMS ->" + code, R.color.colorPrimary)
                 .setMessage("Verify code :  " + code, R.color.colorPrimaryDark)
                 .setIcon(R.drawable.ic_baseline_sms_24)
                 .setCornerRadius(30)
@@ -274,6 +266,7 @@ public class Signin_signup extends AppCompatActivity {
                 .sneak(R.color.colorAccent);
 
     }
+
     private void checkphone() {
         /*chane state */
         ParseQuery<ParseUser> query = ParseUser.getQuery();
@@ -289,7 +282,9 @@ public class Signin_signup extends AppCompatActivity {
                         Log.e("ERROR", state + " -> " + code + "");
                     } else {
                         state = State.Login;
-                        if (users.get(0).getBoolean("ispasschange")) { ISPASSCHANGE =true;}
+                        if (users.get(0).getBoolean("ispasschange")) {
+                            ISPASSCHANGE = true;
+                        }
                         changepasstype.setVisibility(View.VISIBLE);
                         Log.e("ERROR", state + " -> " + code + "");
                     }
@@ -345,8 +340,9 @@ public class Signin_signup extends AppCompatActivity {
 
     public void login(String username, final String password) {
         //
-        Sneaker sneaker = Sneaker.with(Signin_signup.this);sneaker.autoHide(false);
-        View view = LayoutInflater.from(Signin_signup.this).inflate(R.layout.waiting_dialog,  sneaker.getView(), false);
+        Sneaker sneaker = Sneaker.with(Signin_signup.this);
+        sneaker.autoHide(false);
+        View view = LayoutInflater.from(Signin_signup.this).inflate(R.layout.waiting_dialog, sneaker.getView(), false);
         sneaker.sneakCustom(view);
         //
         ParseUser.logInInBackground(username, password, new LogInCallback() {
@@ -364,7 +360,7 @@ public class Signin_signup extends AppCompatActivity {
                     });
 
                 } else {
-                    if (e.getCode()==101){
+                    if (e.getCode() == 101) {
                         pass.setBackgroundResource(R.drawable.text_area_error);
                     }
                     Sneaker.with(Signin_signup.this)

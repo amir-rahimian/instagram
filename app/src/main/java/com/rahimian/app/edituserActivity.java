@@ -2,14 +2,11 @@ package com.rahimian.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -41,10 +38,10 @@ public class edituserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edituser);
 
-        prof = findViewById(R.id.profile_img);
+        prof = findViewById(R.id.RVprofile_img);
         id = findViewById(R.id.idText);
         bio = findViewById(R.id.bioText);
-        name = findViewById(R.id.profileName);
+        name = findViewById(R.id.RVprofileName);
         nameError = findViewById(R.id.nameError);
         biolen = findViewById(R.id.biolen);
         idError = findViewById(R.id.idError);
@@ -71,12 +68,10 @@ public class edituserActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                idValid();
-                nameValid();
-                if (isValidId&isValidName) {
+                if (isValidId&&isValidName) {
                     User.put("name", name.getText().toString());
-                    User.put("userID", id.getText().toString());
-                    User.put("bio", bio.getText().toString());
+                    User.put("userID",((id.getText().toString().length()<2) ? null : id.getText().toString()));
+                    User.put("bio", (bio.getText().toString().matches("")  ) ? null : bio.getText().toString());
                     //
                     Sneaker sneaker = Sneaker.with(edituserActivity.this);
                     sneaker.autoHide(false);
@@ -116,8 +111,7 @@ public class edituserActivity extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 btnSave.setAlpha(0.5f);
                 btnSave.setEnabled(false);
-                nameValid();
-                if (isValidName) {
+                if (nameValid()) {
                     btnSave.setAlpha(1f);
                     btnSave.setEnabled(true);
                 }
@@ -130,10 +124,13 @@ public class edituserActivity extends AppCompatActivity {
                 btnSave.setAlpha(0.5f);
                 btnSave.setEnabled(false);
                 id.setText((id.getText().toString().contains("@")) ? id.getText().toString() : "@" + id.getText().toString());
-                idValid();
-                if (isValidId) {
+                if(id.getText().toString().length()>1){
+                if (idValid()) {
                     btnSave.setAlpha(1f);
                     btnSave.setEnabled(true);
+                }
+                }else{
+                    isValidId = true;
                 }
             }
         });
@@ -150,15 +147,20 @@ public class edituserActivity extends AppCompatActivity {
                 name.setTextColor(getResources().getColor(R.color.colorAccent));
                 nameError.setVisibility(View.GONE);
                 idError.setVisibility(View.GONE);
-                if (isValidId&&isValidName) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (id.getText().toString().matches("(.*[*/()#$%^&+=].*)|.*[\u0600-\u06FF].*")||(!id.getText().toString().isEmpty() && id.getText().toString().contains(" "))){
+                    id.setText(id.getText().toString().substring(0,id.getText().toString().length()-1));
+                    id.setText(id.getText().toString().replace(" ", ""));
+                    id.setSelection(id.getText().length());
+                } else
+                {
+                if (idValid()&nameValid()) {
                     btnSave.setAlpha(1f);
                     btnSave.setEnabled(true);
                 }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
+                }
             }
         };
         id.addTextChangedListener(textWatcher);
@@ -191,7 +193,7 @@ public class edituserActivity extends AppCompatActivity {
 
     }
 
-    private void nameValid() {
+    private boolean nameValid() {
 
         if ((!name.getText().toString().matches("")) && name.getText().toString().matches("^[\\p{L} .'-]+$"))
         {
@@ -203,6 +205,7 @@ public class edituserActivity extends AppCompatActivity {
             nameError.setVisibility(View.VISIBLE);
             name.setTextColor(getResources().getColor(R.color.error));
         }
+        return isValidName;
     }
 
     private void getData() {
@@ -227,7 +230,7 @@ public class edituserActivity extends AppCompatActivity {
 
     }
 
-    private void idValid() {
+    private boolean idValid() {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereNotEqualTo("username", User.getUsername());
         query.whereEqualTo("userID", id.getText().toString().trim());
@@ -249,7 +252,13 @@ public class edituserActivity extends AppCompatActivity {
                 }
             }
         });
+        if (id.getText().toString().length()<4){
+            isValidId = false;
+            id.setTextColor(getResources().getColor(R.color.error));
+            idError.setVisibility(View.VISIBLE);
+        }
 
+        return isValidId;
     }
 
 }
