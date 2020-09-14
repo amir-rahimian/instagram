@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/colorPrimaryDark"
     android:onClick="rootClick"
     tools:context=".edituserActivity">
@@ -24,7 +25,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <EditText
-        android:id="@+id/RVprofileName"
+        android:id="@+id/profileName"
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_marginRight="16dp"
@@ -39,8 +40,8 @@
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/nameLable"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameLable" />
 
     <TextView
@@ -83,8 +84,8 @@
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/idLable"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bioLable" />
 
     <EditText
@@ -103,8 +104,8 @@
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/idLable"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/idLable" />
 
     <TextView
@@ -119,7 +120,7 @@
         android:textColor="@color/colorAccent"
         android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RVprofileName" />
+        app:layout_constraintTop_toBottomOf="@+id/profileName" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline8"
@@ -180,15 +181,15 @@
         android:background="@color/colorPrimaryDark"
         android:elevation="3dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
         <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/RVprofile_img"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:id="@+id/EDprofile_img"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:src="@drawable/ob_pro"
             android:transitionName="profilePhoto"
             app:civ_border_color="@color/colorAccent"
@@ -196,10 +197,26 @@
             app:civ_shadow="true"
             app:civ_shadow_color="@color/colorPrimaryDark"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.6" />
+
+        <TextView
+            android:id="@+id/EDonprof"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-smallcaps"
+            android:maxLength="1"
+            android:textColor="@color/colorAccent"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:transitionName="onprof"
+            app:layout_constraintBottom_toBottomOf="@+id/EDprofile_img"
+            app:layout_constraintEnd_toEndOf="@+id/EDprofile_img"
+            app:layout_constraintLeft_toRightOf="@+id/EDprofile_img"
+            app:layout_constraintStart_toStartOf="@+id/EDprofile_img"
+            app:layout_constraintTop_toTopOf="@+id/EDprofile_img" />
 
         <Button
             android:id="@+id/btnChangePhoto"
@@ -214,10 +231,76 @@
             android:textColorHighlight="@color/colorPrimaryDark"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="@+id/RVprofile_img"
-            app:layout_constraintLeft_toLeftOf="@+id/RVprofile_img"
-            app:layout_constraintTop_toBottomOf="@+id/RVprofile_img" />
+            app:layout_constraintLeft_toLeftOf="@+id/EDprofile_img"
+            app:layout_constraintRight_toRightOf="@+id/EDprofile_img"
+            app:layout_constraintTop_toBottomOf="@+id/EDprofile_img" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profdialog"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:background="@color/colorPrimary"
+        android:elevation="20dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/takecameOP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:fontFamily="sans-serif"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="15dp"
+                android:text="Take By Camera"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/selectgallaryOP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:fontFamily="sans-serif"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="15dp"
+                android:text="Select From Gallery"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/removeOP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:fontFamily="sans-serif"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="15dp"
+                android:text="Remove"
+                android:textColor="@color/error"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+

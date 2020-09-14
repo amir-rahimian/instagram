@@ -87,7 +87,7 @@ public class Users_fragment extends Fragment {
                             objects) {
                         userArray.add(user);
                     }
-                    userRV.setAdapter(new UserRVAdapter(userArray));
+                    userRV.setAdapter(new UserRVAdapter(userArray,getContext()));
                     userRV.setVisibility(View.VISIBLE);
                     loadarea.setVisibility(View.GONE);
                     imgerror.setVisibility(View.GONE);

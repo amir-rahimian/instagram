@@ -36,4 +36,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/RVonprofName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-smallcaps"
+        android:maxLength="1"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/RVprofile_img"
+        app:layout_constraintEnd_toEndOf="@+id/RVprofile_img"
+        app:layout_constraintLeft_toRightOf="@+id/RVprofile_img"
+        app:layout_constraintStart_toStartOf="@+id/RVprofile_img"
+        app:layout_constraintTop_toTopOf="@+id/RVprofile_img" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

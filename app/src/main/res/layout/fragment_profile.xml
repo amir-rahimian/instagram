@@ -19,6 +19,37 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/profile_img"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ob_pro"
+            android:transitionName="profilePhoto"
+            app:civ_border_color="@color/colorAccent"
+            app:civ_border_width="1dp"
+            app:civ_shadow="true"
+            app:civ_shadow_color="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/onprofName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-smallcaps"
+            android:maxLength="1"
+            android:textColor="@color/colorAccent"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:transitionName="onprof"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_img"
+            app:layout_constraintEnd_toEndOf="@+id/profile_img"
+            app:layout_constraintLeft_toRightOf="@+id/profile_img"
+            app:layout_constraintStart_toStartOf="@+id/profile_img"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/profileName"
             android:layout_width="wrap_content"
@@ -33,21 +64,6 @@
             app:layout_constraintLeft_toRightOf="@+id/profile_img"
             app:layout_constraintTop_toTopOf="@+id/profile_img"
             app:layout_constraintVertical_bias="0.32999998" />
-
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/profile_img"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginLeft="24dp"
-            android:src="@drawable/ob_pro"
-            android:transitionName="profilePhoto"
-            app:civ_border_color="@color/colorAccent"
-            app:civ_border_width="1dp"
-            app:civ_shadow="true"
-            app:civ_shadow_color="@color/colorPrimaryDark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/profileUsername"

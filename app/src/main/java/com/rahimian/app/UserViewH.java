@@ -10,7 +10,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 
 public class UserViewH extends RecyclerView.ViewHolder {
 
-    private TextView name ;
+    private TextView name ,onprof ;
     private CircularImageView prof ;
 
     public UserViewH(@NonNull View itemView) {
@@ -18,7 +18,12 @@ public class UserViewH extends RecyclerView.ViewHolder {
 
         name = itemView.findViewById(R.id.RVprofileName);
         prof = itemView.findViewById(R.id.RVprofile_img);
+        onprof = itemView.findViewById(R.id.RVonprofName);
 
+    }
+
+    public TextView getOnprof() {
+        return onprof;
     }
 
     public TextView getName() {
