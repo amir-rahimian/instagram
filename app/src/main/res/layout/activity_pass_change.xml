@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ActPass"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="rootClick"
     android:animateLayoutChanges="false"
-    tools:context=".PassChangeActivity">
+    android:onClick="rootClick"
+    tools:context=".settings.PassChangeActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -19,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/home_toolbar"
+            android:id="@+id/addpost_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark">

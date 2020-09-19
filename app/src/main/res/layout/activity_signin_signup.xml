@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Signin_signup"
+    tools:context=".starter.Signin_signup"
     android:animateLayoutChanges="true"
     android:onClick="rootClick"
     >
@@ -61,7 +61,7 @@
         android:ems="10"
         android:hint="Your phone number"
         android:inputType="phone"
-        android:maxLength="11"
+        android:maxLength="15"
         android:paddingLeft="2dp"
         android:paddingTop="15dp"
         android:paddingRight="10dp"

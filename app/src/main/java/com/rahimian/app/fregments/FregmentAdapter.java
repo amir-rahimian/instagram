@@ -1,10 +1,14 @@
-package com.rahimian.app;
+package com.rahimian.app.fregments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.rahimian.app.fregments.posts.Posts_fragment;
+import com.rahimian.app.fregments.profile.Profile_fragment;
+import com.rahimian.app.fregments.users.Users_fragment;
 
 public class FregmentAdapter extends FragmentPagerAdapter {
     public FregmentAdapter(@NonNull FragmentManager fm, int behavior) {

@@ -1,8 +1,9 @@
-package com.rahimian.app;
+package com.rahimian.app.parseApp;
 
 import android.app.Application;
 
 import com.parse.Parse;
+import com.rahimian.app.R;
 
 public class App extends Application {
     @Override

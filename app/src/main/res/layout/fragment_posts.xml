@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".Posts_fragment">
+    tools:context=".fregments.posts.Posts_fragment">
 
     <LinearLayout
         android:id="@+id/loadarea"
@@ -37,7 +37,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imgerror2"
+        android:id="@+id/imgerror"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:src="@drawable/ic_error"

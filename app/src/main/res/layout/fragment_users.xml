@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="@color/colorPrimaryDark"
-    tools:context=".Users_fragment">
+    tools:context=".fregments.users.Users_fragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/userRV"

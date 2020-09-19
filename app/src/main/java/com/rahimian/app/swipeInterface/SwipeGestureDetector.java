@@ -1,4 +1,4 @@
-package com.rahimian.app;
+package com.rahimian.app.swipeInterface;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;

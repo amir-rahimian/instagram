@@ -1,8 +1,4 @@
-package com.rahimian.app;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Guideline;
+package com.rahimian.app.starter;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,17 +18,20 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Guideline;
 
 import com.irozon.sneaker.Sneaker;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
-
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
-
+import com.rahimian.app.Home;
+import com.rahimian.app.R;
 
 import java.util.List;
 
@@ -137,7 +136,13 @@ public class Signin_signup extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (pass.getVisibility() == View.GONE) {
-                    if ((phone.length() == 11)) {
+                    if (phone.getText().toString().startsWith("9")){
+                        phone.setText("0"+phone.getText().toString());
+                    }
+                    if ((phone.length() >= 11)&&(phone.getText().toString().matches("^(\\+98|0)?9\\d{9}$")||phone.getText().toString().matches("^[0][9][0-9][0-9]{8,8}$"))) {
+
+                        phone.setText(phone.getText().toString().replace("+98","0"));
+
                         generaitcode();
                         checkphone();
                         starttimer();
@@ -150,7 +155,7 @@ public class Signin_signup extends AppCompatActivity {
                     } else {
                         phone.setBackgroundResource(R.drawable.text_area_error);
                         Sneaker.with(Signin_signup.this)
-                                .setTitle("NOT Valid Phone.Num", R.color.colorPrimary)
+                                .setTitle("NOT Valid Phone.Number", R.color.colorPrimary)
                                 .setMessage("not a valid phone number!", R.color.colorPrimaryDark)
                                 .setCornerRadius(30)
                                 .sneakError();
@@ -174,6 +179,7 @@ public class Signin_signup extends AppCompatActivity {
                             ///////////////// CHECK SING UP OR IN //////////////////////
                             if (state == State.Signup) {
                                 getname.setVisibility(View.VISIBLE);
+                                edit.setVisibility(View.GONE);
                                 btn.setText("Log In");
                             } else {
                                 // LOG IN  ///////////////////////////////
@@ -200,7 +206,6 @@ public class Signin_signup extends AppCompatActivity {
                         }
                     }
                 } else {//GET NAME
-
                     if ((!name.getText().toString().matches("")) && name.getText().toString().matches("^[\\p{L} .'-]+$")) {
                         //SING UP  //////////////////////////
                         ParseUser parseUser = new ParseUser();
@@ -220,6 +225,7 @@ public class Signin_signup extends AppCompatActivity {
                                 if (e == null) {
                                     Intent intent = new Intent(Signin_signup.this, Home.class);
                                     startActivity(intent);
+                                    finish();
                                 } else {
                                     Sneaker.with(Signin_signup.this)
                                             .setTitle(e.getMessage() + "  :  " + e.getCode(), R.color.colorPrimary)
@@ -355,6 +361,7 @@ public class Signin_signup extends AppCompatActivity {
                             if (Integer.parseInt(ParseUser.getCurrentUser().get("genericpass").toString()) == code) {
                                 Intent intent = new Intent(Signin_signup.this, Home.class);
                                 startActivity(intent);
+                                finish();
                             }
                         }
                     });

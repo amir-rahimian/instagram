@@ -5,7 +5,7 @@
     android:id="@+id/back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".onboardings"
+    tools:context=".starter.onboardings"
     android:animateLayoutChanges="true"
     >
 

@@ -1,10 +1,11 @@
-package com.rahimian.app;
+package com.rahimian.app.settings;
 
-import android.graphics.PorterDuff;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
@@ -14,12 +15,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GestureDetectorCompat;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.irozon.sneaker.Sneaker;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.rahimian.app.R;
+import com.rahimian.app.swipeInterface.SwipeActions;
+import com.rahimian.app.swipeInterface.SwipeGestureDetector;
 
 public class PassChangeActivity extends AppCompatActivity {
 
@@ -33,6 +39,10 @@ public class PassChangeActivity extends AppCompatActivity {
     private ProgressBar progress;
     private TextView passhint, errortxt;
     private EditText password;
+    private ConstraintLayout root;
+
+    private GestureDetectorCompat gestureDetectorCompat;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +56,7 @@ public class PassChangeActivity extends AppCompatActivity {
         User = ParseUser.getCurrentUser();
 
         passhint = findViewById(R.id.passhint);
+        root = findViewById(R.id.ActPass);
         errortxt = findViewById(R.id.errortxt);
         progress = findViewById(R.id.prograssvalidpass);
         progress.setVisibility(View.GONE);
@@ -81,7 +92,7 @@ public class PassChangeActivity extends AppCompatActivity {
                     password.setSelection(password.getText().length());
                 }
                 if (textEntered.matches("(.*[\u0600-\u06FF].*)|(.*[*/()].*)")) {
-                    password.setText(textEntered.substring(0,textEntered.length()-1));
+                    password.setText(textEntered.substring(0, textEntered.length() - 1));
                     password.setSelection(password.getText().length());
                 }
                 int prog = 0;
@@ -118,13 +129,13 @@ public class PassChangeActivity extends AppCompatActivity {
                         break;
 
                     case 3:
-                        if (password.getText().toString().length()>=6){
-                        OKPASS = true;
-                        progress.getProgressDrawable().setColorFilter(
-                                getResources().getColor(R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN);
-                        errortxt.setTextColor(getResources().getColor(R.color.colorAccent));
-                        errortxt.setText(errortxt.getText().toString() + getResources().getString(R.string.its_ok));
-                        }else {
+                        if (password.getText().toString().length() >= 6) {
+                            OKPASS = true;
+                            progress.getProgressDrawable().setColorFilter(
+                                    getResources().getColor(R.color.colorAccent), android.graphics.PorterDuff.Mode.SRC_IN);
+                            errortxt.setTextColor(getResources().getColor(R.color.colorAccent));
+                            errortxt.setText(errortxt.getText().toString() + getResources().getString(R.string.its_ok));
+                        } else {
                             OKPASS = false;
                             progress.getProgressDrawable().setColorFilter(
                                     getResources().getColor(R.color.warning), android.graphics.PorterDuff.Mode.SRC_IN);
@@ -219,6 +230,35 @@ public class PassChangeActivity extends AppCompatActivity {
             }
         });
 
+        //swipe implementation
+        SwipeGestureDetector swipeGestureDetector = new SwipeGestureDetector(new SwipeActions() {
+            @Override
+            public void onSwipeLeft() {
+            }
+
+            @Override
+            public void onSwipeRight() {
+                onBackPressed();
+            }
+
+            @Override
+            public void onSwipeUp() {
+            }
+
+            @Override
+            public void onSwipeDown() {
+            }
+        });
+        gestureDetectorCompat = new GestureDetectorCompat(getApplicationContext(), swipeGestureDetector);
+        root.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetectorCompat.onTouchEvent(event);
+                return true;
+            }
+        });
+
 
     }
 
@@ -242,29 +282,29 @@ public class PassChangeActivity extends AppCompatActivity {
 
         String passwordstr = password.getText().toString().trim();
 
-            if (passwordstr.length() > 8) {
-                goodpass[0] = true;
-            } else {
-                goodpass[0] = false;
-            }
+        if (passwordstr.length() > 8) {
+            goodpass[0] = true;
+        } else {
+            goodpass[0] = false;
+        }
 
-            if (passwordstr.matches(specialCharRegex)) {
-                goodpass[1] = true;
-            } else {
-                goodpass[1] = false;
-            }
+        if (passwordstr.matches(specialCharRegex)) {
+            goodpass[1] = true;
+        } else {
+            goodpass[1] = false;
+        }
 
-            if (passwordstr.matches(UpperCaseRegex)) {
-                goodpass[2] = true;
-            } else {
-                goodpass[2] = false;
-            }
+        if (passwordstr.matches(UpperCaseRegex)) {
+            goodpass[2] = true;
+        } else {
+            goodpass[2] = false;
+        }
 
-            if (passwordstr.matches(NumberRegex)) {
-                goodpass[3] = true;
-            } else {
-                goodpass[3] = false;
-            }
+        if (passwordstr.matches(NumberRegex)) {
+            goodpass[3] = true;
+        } else {
+            goodpass[3] = false;
+        }
 
     }
 

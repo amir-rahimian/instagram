@@ -1,8 +1,5 @@
-package com.rahimian.app;
+package com.rahimian.app.starter;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.GestureDetectorCompat;
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -15,9 +12,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GestureDetectorCompat;
+
 import com.parse.ParseUser;
 import com.podcopic.animationlib.library.AnimationType;
 import com.podcopic.animationlib.library.StartSmartAnimation;
+import com.rahimian.app.Home;
+import com.rahimian.app.R;
+import com.rahimian.app.swipeInterface.SwipeActions;
+import com.rahimian.app.swipeInterface.SwipeGestureDetector;
 
 public class onboardings extends AppCompatActivity     {
     private ImageView logo , next , pre ;
@@ -36,7 +41,7 @@ public class onboardings extends AppCompatActivity     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboardings);
         if (ParseUser.getCurrentUser()!=null){
-            Intent intent = new Intent(this,Home.class);
+            Intent intent = new Intent(this, Home.class);
             startActivity(intent);
             finish();
         }
@@ -51,7 +56,7 @@ public class onboardings extends AppCompatActivity     {
         titles[1]= "Post";
         texts[1]="You can Post inorder to share your time with your friends :)  ";
     /*php*/
-        logos[2]=getResources().getDrawable(R.drawable.ob_pro);
+        logos[2]=getResources().getDrawable(R.drawable.ob_protnro);
         titles[2]= "Profile";
         texts[2]="its time to create an account and complete it to start ";
 
@@ -145,40 +150,32 @@ public class onboardings extends AppCompatActivity     {
             }
         });
 
+        //swipe implementation
         SwipeGestureDetector swipeGestureDetector = new SwipeGestureDetector(new SwipeActions() {
             @Override
             public void onSwipeLeft() {
-                //Write The actions need to be performed when Swiped Left here
                 next.callOnClick();
             }
 
             @Override
             public void onSwipeRight() {
-                //Write The actions need to be performed when Swiped Right here
                 pre.callOnClick();
             }
 
             @Override
             public void onSwipeUp() {
-                //Write The actions need to be performed when Swiped up here
             }
 
             @Override
             public void onSwipeDown() {
-                //Write The actions need to be performed when Swiped down here
             }
         });
-
-
-        //Assign GestureDetectorCompat instance by passing swipeGestureDetector instance
         gestureDetectorCompat = new GestureDetectorCompat(getApplicationContext(), swipeGestureDetector);
-        //Set onTouchListener on rootLayout
         back.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 gestureDetectorCompat.onTouchEvent(event);
-                //Make sure it returns true because event needs to be consumed in the end
                 return true;
             }
         });

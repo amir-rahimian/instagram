@@ -4,22 +4,27 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".App"
+        android:name=".parseApp.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PassChangeActivity"></activity>
-        <activity android:name=".edituserActivity" />
+        <activity android:name=".fregments.posts.MakePost"></activity>
+        <activity android:name=".settings.Setting" />
+        <activity android:name=".fregments.users.User_page" />
+        <activity android:name=".settings.PassChangeActivity" />
+        <activity android:name=".fregments.profile.edituserActivity" />
         <activity android:name=".Home" />
-        <activity android:name=".Signin_signup" />
-        <activity android:name=".onboardings" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".starter.Signin_signup" />
+        <activity android:name=".starter.onboardings" />
+        <activity android:name=".starter.MainActivity"
+            android:theme="@style/Theme.Design.BottomSheetDialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

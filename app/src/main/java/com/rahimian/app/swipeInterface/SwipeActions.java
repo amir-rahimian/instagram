@@ -1,4 +1,4 @@
-package com.rahimian.app;
+package com.rahimian.app.swipeInterface;
 
 public interface SwipeActions {
     void onSwipeLeft();

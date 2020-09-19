@@ -3,10 +3,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/refresher"
+    android:id="@+id/profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile_fragment">
+    tools:context=".fregments.profile.Profile_fragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,8 +15,8 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:elevation="3dp"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.mikhaellopez.circularimageview.CircularImageView
@@ -39,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center"
             android:maxLength="1"
             android:textColor="@color/colorAccent"
             android:textSize="36sp"
@@ -72,207 +73,166 @@
             android:text="username"
             app:layout_constraintLeft_toLeftOf="@+id/profileName"
             app:layout_constraintTop_toBottomOf="@+id/profileName" />
+
+        <ProgressBar
+            android:id="@+id/loadprof"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/profile_img"
+            app:layout_constraintStart_toStartOf="@+id/profile_img"
+            app:layout_constraintTop_toTopOf="@+id/profile_img" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ScrollView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/colorPrimaryDark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginRight="1dp">
-
-                    <TextView
-                        android:id="@+id/bioLable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Bio"
-                        android:textSize="12sp"
-                        app:layout_constraintLeft_toLeftOf="@+id/bioText"
-                        app:layout_constraintTop_toBottomOf="@+id/bioText" />
-
-                    <TextView
-                        android:id="@+id/bioText"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="24dp"
-                        android:fontFamily="sans-serif-condensed-light"
-                        android:text="Bio"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintLeft_toLeftOf="@+id/phoneLable"
-                        app:layout_constraintTop_toBottomOf="@+id/phoneLable" />
-
-                    <TextView
-                        android:id="@+id/phoneLable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Phone number"
-                        android:textSize="12sp"
-                        app:layout_constraintLeft_toLeftOf="@+id/phoneText"
-                        app:layout_constraintTop_toBottomOf="@+id/phoneText" />
-
-                    <TextView
-                        android:id="@+id/phoneText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="sans-serif-condensed-light"
-                        android:text="Phone"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="@+id/idText"
-                        app:layout_constraintTop_toBottomOf="@+id/idLable" />
-
-                    <TextView
-                        android:id="@+id/idText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="sans-serif-condensed-light"
-                        android:text="ID"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/idLable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Id"
-                        android:textSize="12sp"
-                        app:layout_constraintLeft_toLeftOf="@+id/idText"
-                        app:layout_constraintTop_toBottomOf="@+id/idText" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@color/colorPrimary"
+                android:elevation="3dp"
+                android:paddingBottom="5dp">
 
                 <TextView
-                    android:id="@+id/SettinsLable"
-                    android:layout_width="match_parent"
+                    android:id="@+id/bioLable"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/action_settings"
+                    android:text="Bio"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="@+id/bioText"
+                    app:layout_constraintTop_toBottomOf="@+id/bioText" />
+
+                <TextView
+                    android:id="@+id/bioText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="24dp"
+                    android:fontFamily="sans-serif-condensed-light"
+                    android:text="Bio"
                     android:textColor="@color/colorAccent"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="@+id/phoneLable"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/phoneLable" />
 
-                <LinearLayout
-                    android:id="@+id/changePass"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:orientation="horizontal"
-                    >
+                <TextView
+                    android:id="@+id/phoneLable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phone number"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="@+id/phoneText"
+                    app:layout_constraintTop_toBottomOf="@+id/phoneText" />
 
-                    <ImageView
-                        android:id="@+id/opIcon1"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="24dp"
-                        app:srcCompat="@drawable/ic_password"
-                        tools:src="@tools:sample/avatars" />
+                <TextView
+                    android:id="@+id/phoneText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif-condensed-light"
+                    android:text="Phone"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="@+id/idText"
+                    app:layout_constraintTop_toBottomOf="@+id/idLable" />
 
-                    <TextView
-                        android:id="@+id/staticPass"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:layout_weight="5"
-                        android:text="Static Password"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15dp" />
+                <TextView
+                    android:id="@+id/idText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif-condensed-light"
+                    android:text="ID"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/passOnOrOff"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:text="@string/loading"
-                        android:textColor="@color/blue"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/idLable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Id"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="@+id/idText"
+                    app:layout_constraintTop_toBottomOf="@+id/idText" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
-                    android:id="@+id/logout"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clickable="true"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="2dp"
+                android:background="@color/colorPrimary"
+                android:elevation="3dp"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Posts"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
-                    <ImageView
-                        android:id="@+id/logoutimg"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="24dp"
-                        android:padding="2dp"
-                        app:srcCompat="@drawable/ic_logout"
-                        app:tint="@color/error"
-                        tools:src="@tools:sample/avatars" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userpostRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:id="@+id/logouttext"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:text="Log Out"
-                        android:textColor="@color/error"
-                        android:textSize="15dp" />
-                </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
-            </LinearLayout>
-        </ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="24dp"
+        android:backgroundTint="#FFFFFF"
+        android:clickable="true"
+        android:drawablePadding="10dp"
+        android:elevation="5dp"
+        android:focusable="true"
+        android:src="@drawable/ic_trasparent_edit"
+        android:textSize="12sp"
+        android:tint="@color/colorPrimary"
+        android:translationZ="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:rippleColor="@color/colorAccent" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/editBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="24dp"
-            android:clickable="true"
-            android:drawablePadding="10dp"
-            android:elevation="5dp"
-            android:focusable="true"
-            android:src="@drawable/ic_trasparent_edit"
-            android:textSize="12sp"
-            android:translationZ="2dp"
-            app:backgroundTint="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-            app:rippleColor="@color/colorPrimaryDark" />
+    <TextView
+        android:id="@+id/noposttxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Posets Yet"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

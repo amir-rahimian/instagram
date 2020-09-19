@@ -11,5 +11,4 @@
     <style name="switchstyle" >
         <item name="colorAccent">@color/blue</item>
     </style>
-
 </resources>

@@ -7,7 +7,7 @@
     android:animateLayoutChanges="true"
     android:background="@color/colorPrimaryDark"
     android:onClick="rootClick"
-    tools:context=".edituserActivity">
+    tools:context=".fregments.profile.edituserActivity">
 
 
     <TextView
@@ -80,7 +80,7 @@
         android:gravity="center|left"
         android:hint="Bio"
         android:maxLength="70"
-        android:maxLines="5"
+        android:maxLines="3"
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -207,6 +207,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center"
             android:maxLength="1"
             android:textColor="@color/colorAccent"
             android:textSize="40sp"

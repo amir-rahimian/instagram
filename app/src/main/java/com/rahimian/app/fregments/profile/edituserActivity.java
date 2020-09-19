@@ -1,25 +1,14 @@
-package com.rahimian.app;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
+package com.rahimian.app.fregments.profile;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Notification;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -36,7 +25,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+
 import com.irozon.sneaker.Sneaker;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
@@ -45,12 +40,12 @@ import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.rahimian.app.R;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
-import java.net.URI;
-import java.net.URL;
 import java.util.List;
 
 public class edituserActivity extends AppCompatActivity {
@@ -64,13 +59,20 @@ public class edituserActivity extends AppCompatActivity {
     private boolean isValidId = true, isValidName = true;
     private ParseUser User;
     private Bitmap profilebit = null;
+    private ParseFile profilefile ;
     private boolean isprofchange;
-    private boolean prossess;
+
+    private CropImageView cropImageView;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edituser);
+
+        dialog = new Dialog(edituserActivity.this,R.style.Theme_Design_BottomSheetDialog);
+        dialog.setContentView(R.layout.profile_croper);
+        cropImageView = dialog.findViewById(R.id.prof_crop);
 
         profdialog = findViewById(R.id.profdialog);
         profdialog.setTranslationY(20000);
@@ -131,6 +133,7 @@ public class edituserActivity extends AppCompatActivity {
                         isprofchange = false;
                         prof.setImageBitmap(getBitmapFromVectorDrawable(edituserActivity.this, R.drawable.ob_pro));
                         onprof.setVisibility(View.VISIBLE);
+                        onprof.setText(name.getText());
                         break;
                 }
 
@@ -149,13 +152,12 @@ public class edituserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (isValidId && isValidName) {
                     //
-                    prossess=true;
                     Sneaker sneaker = Sneaker.with(edituserActivity.this);
                     sneaker.autoHide(false);
                     View view = LayoutInflater.from(edituserActivity.this).inflate(R.layout.waiting_dialog, sneaker.getView(), false);
                     sneaker.sneakCustom(view);
                     //
-                    if (isprofchange){ User.put("profilephoto", convertToFile(profilebit));}
+                    if (isprofchange){ User.put("profilephoto", profilefile);}
                     User.put("name", name.getText().toString());
                     User.put("userID", ((id.getText().toString().length() < 2) ? null : id.getText().toString()));
                     User.put("bio", (bio.getText().toString().matches("")) ? null : bio.getText().toString());
@@ -163,9 +165,8 @@ public class edituserActivity extends AppCompatActivity {
                     User.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            prossess=false;
                             if (e == null) {
-                                onBackPressed();
+                                getData();
                             } else {
                                 Sneaker.with(edituserActivity.this)
                                         .setTitle(e.getMessage(), R.color.colorPrimary)
@@ -174,6 +175,7 @@ public class edituserActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    onBackPressed();
                 } else {
                     btnSave.setAlpha(0.5f);
                     btnSave.setEnabled(false);
@@ -205,8 +207,7 @@ public class edituserActivity extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 btnSave.setAlpha(0.5f);
                 btnSave.setEnabled(false);
-                if (id.getText().toString().length() > 0) {
-                    id.setText((id.getText().toString().contains("@")) ? id.getText().toString() : "@" + id.getText().toString());
+                if (id.getText().toString().length() > 1) {
                     if (idValid()) {
                         btnSave.setAlpha(1f);
                         btnSave.setEnabled(true);
@@ -226,10 +227,12 @@ public class edituserActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!id.getText().toString().contains("@")) {id.setText("@" + id.getText().toString()); id.setSelection(id.getText().length());}
                 id.setTextColor(getResources().getColor(R.color.colorAccent));
                 name.setTextColor(getResources().getColor(R.color.colorAccent));
                 nameError.setVisibility(View.GONE);
                 idError.setVisibility(View.GONE);
+                onprof.setText(name.getText());
             }
 
             @Override
@@ -296,6 +299,7 @@ public class edituserActivity extends AppCompatActivity {
         name.setText(User.get("name").toString());
         if (User.getBoolean("haveprofile")){
             onprof.setText("");
+            onprof.setVisibility(View.GONE);
             ParseFile parseFile = User.getParseFile("profilephoto");
             parseFile.getDataInBackground(new GetDataCallback() {
                 @Override
@@ -306,6 +310,7 @@ public class edituserActivity extends AppCompatActivity {
             });
         }else {
             prof.setImageBitmap(getBitmapFromVectorDrawable(edituserActivity.this, R.drawable.ob_pro));
+            onprof.setVisibility(View.VISIBLE);
             onprof.setText(name.getText());
         }
         id.setText(((User.get("userID") == null) ? "" : User.get("userID").toString()));
@@ -314,7 +319,6 @@ public class edituserActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(!prossess)
         super.onBackPressed();
     }
 
@@ -355,11 +359,6 @@ public class edituserActivity extends AppCompatActivity {
                 }
             }
         });
-        if (id.getText().toString().length() < 4) {
-            isValidId = false;
-            id.setTextColor(getResources().getColor(R.color.error));
-            idError.setVisibility(View.VISIBLE);
-        }
 
         return isValidId;
     }
@@ -388,20 +387,14 @@ public class edituserActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
-
                 case 3000:
                     profilebit = null;
                     isprofchange = false;
                     try {
-                        profilebit = (Bitmap) data.getExtras().get("data");
-                        isprofchange = true;
-                        User.put("haveprofile",true);
-                        if (profilebit != null) {
-                            onprof.setVisibility(View.GONE);
-                            prof.setImageBitmap(profilebit);
-                        } else {
-                            onprof.setVisibility(View.VISIBLE);
-                        }
+                        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                        cropImageView.setImageBitmap(bitmap);
+                        dialog.show();
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -411,15 +404,8 @@ public class edituserActivity extends AppCompatActivity {
                     isprofchange = false;
                     try {
                         Uri uri = data.getData();
-                        profilebit = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                        isprofchange = true;
-                        User.put("haveprofile",true);
-                        if (profilebit != null) {
-                            onprof.setVisibility(View.GONE);
-                            prof.setImageBitmap(profilebit);
-                        } else {
-                            onprof.setVisibility(View.VISIBLE);
-                        }
+                        cropImageView.setImageUriAsync(uri);
+                        dialog.show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -450,5 +436,19 @@ public class edituserActivity extends AppCompatActivity {
         return new ParseFile("Profile",byteArrayOutputStream.toByteArray());
     }
 
+    public void crop (View view){
+        profilebit = cropImageView.getCroppedImage();
+        isprofchange = true;
+        User.put("haveprofile",true);
+        if (profilebit != null) {
+            onprof.setVisibility(View.GONE);
+            prof.setImageBitmap(profilebit);
+            profilefile= convertToFile(profilebit);
+        } else {
+            onprof.setText(name.getText());
+            onprof.setVisibility(View.VISIBLE);
+        }
+        dialog.dismiss();
+    }
 }
 

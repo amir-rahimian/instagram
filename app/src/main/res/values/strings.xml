@@ -16,5 +16,21 @@
     <string name="its_good"><b>\n Its GOOD !</b></string>
     <string name="to_short"><b>\n Its Too Short !</b></string>
     <string name="passhint"><b>For Better Password</b> \n * Has <u>8</u> Characters, Minimum \n * Includes Numbers, Symbols, Capital Letters, and Lower-Case Letters\n * Isn’t a Dictionary Word or Combination of Dictionary Words\n * Doesn’t Rely on Obvious Substitutions</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 </resources>
